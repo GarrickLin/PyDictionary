@@ -28,6 +28,5 @@ pip install --upgrade PyInstaller pyinstaller-hooks-contrib Pillow
 packaging
 
 ```bash
-pip
-pyinstaller  --windowed --icon=dict.ico CleanDict.pyw 
+pip pyinstaller  --windowed --icon=dict.ico CleanDict.pyw 
 ```
