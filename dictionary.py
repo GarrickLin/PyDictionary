@@ -1,21 +1,20 @@
 #!/usr/bin/env python
-#coding:utf-8
+# coding:utf-8
 """
   Author:  G.K.
   Purpose: 
   Created: 2016/3/3
 """
 
-import sys
 import json
-import urllib2
+import urllib.request as urllib2
 
 """
-API key：779070219
-keyfrom：GK-Blog
+API key: 779070219
+keyfrom: GK-Blog
 doctype: json
 """
-api = u"http://fanyi.youdao.com/openapi.do?keyfrom=GK-Blog&key=779070219&type=data&doctype=json&version=1.1&q=".encode('utf-8')
+api = u"http://fanyi.youdao.com/openapi.do?keyfrom=GK-Blog&key=779070219&type=data&doctype=json&version=1.1&q="
 
 somo = u"(ಥ_ಥ)"
 bq = """
@@ -58,7 +57,7 @@ def translate(word):
     try:
         content = urllib2.urlopen(t_api, timeout=3).read()
     except:
-        #print "There might be a network problem.\nPlease try later!"
+        # print "There might be a network problem.\nPlease try later!"
         out = somo + u" There might be a network problem.\nPlease try later!\n"
         out += bq
         return out
@@ -66,11 +65,12 @@ def translate(word):
         content = json.loads(content)
         out = parse(content)
     except:
-        #print "There might be an unhandled exception.\nPlease try later!"
+        # print "There might be an unhandled exception.\nPlease try later!"
         out = somo + u" There might be an unhandled exception.\nPlease try later!\n"
-        out += bq        
+        out += bq
     return out
-    
+
+
 def tryget(content, strs):
     cur = content
     for ss in strs:
@@ -80,14 +80,15 @@ def tryget(content, strs):
             return None
     return cur
 
+
 def parse(content):
     code = content['errorCode']
     out = u""
-    if code == 0: # Success
+    if code == 0:  # Success
         u = tryget(content, ['basic', 'us-phonetic'])
         e = tryget(content, ['basic', 'uk-phonetic'])
         explains = tryget(content, ['basic', 'explains'])
-        #print content['query'], ':', content['translation'][0]
+        # print content['query'], ':', content['translation'][0]
         if content['query'] == content['translation'][0]:
             out += somo + u" Sorry, no translation result !\n"
             out += bq
@@ -99,15 +100,15 @@ def parse(content):
         if u is not None:
             out += "US: ["
             out += u
-            out += "]   "            
+            out += "]   "
         if e is not None:
             out += "UK: ["
             out += e
             out += "]\n"
-        if explains is not None:            
+        if explains is not None:
             out += "----------------------------------------\n"
             out += '[Explains]\n'
-            for i in range(len(explains)):                
+            for i in range(len(explains)):
                 out += "   "
                 out += explains[i]
                 out += "\n"
@@ -124,28 +125,28 @@ def parse(content):
                 out = out[:-2]
                 out += "\n"
     elif code == 20:
-        #print "The Input is too long!"
+        # print "The Input is too long!"
         out += somo + u" The Input is too long!\n"
         out += bq
     elif code == 30:
-        #print "Failed to translate!"
+        # print "Failed to translate!"
         out += somo + u" Failed to translate!\n"
-        out += bq           
+        out += bq
     elif code == 40:
-        #print "Unsupported language!"
+        # print "Unsupported language!"
         out += somo + u" Unsupported language!\n"
         out += bq
     elif code == 50:
-        #print "Unsupported input!"
+        # print "Unsupported input!"
         out += somo + u" Unsupported input!\n"
         out += bq
     elif code == 60:
-        #print "Sorry, no translation result!"
+        # print "Sorry, no translation result!"
         out += somo + u" Sorry, no translation result !\n"
         out += bq
     return out
 
+
 if __name__ == "__main__":
     word = "smile"
-    #pprint.pprint(word)
     translate(word)

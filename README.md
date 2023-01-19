@@ -1,18 +1,33 @@
-PyDictionary
+Clean Dictionary
 ============
 
 Python implemention of a **No Ad** Dictionary
 
-### Dependency
-* PyQt4
-* urllib2
-* json
-* fanyi.youdao API
+## Dependency
+* Python3
+* PyQt5
+* Pyinstaller*
 
-### Environment
-* Windows
+## Environment
+* Windows or MacOS
 
-### Usage
+## Usage
+
+```bash
+python CleanDict.pyw
 ```
-python ui.pyw
+
+## Package to executable
+
+setup requirements
+
+```bash
+pip install --upgrade PyInstaller pyinstaller-hooks-contrib Pillow
+```
+
+packaging
+
+```bash
+pip
+pyinstaller  --windowed --icon=dict.ico CleanDict.pyw 
 ```
